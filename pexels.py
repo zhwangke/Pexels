@@ -27,7 +27,7 @@ def getHtml():
         response = requests.get(url,headers=headers)
         html = response.text
         #return html
-        getUrl(html)
+        getUrl(html,page)
 def getUrl(html,page):
 
     """
@@ -43,7 +43,13 @@ def getUrl(html,page):
         pic = img[0]
         #print(pic)
         writeFile(pic)
-    print("第{}页下载完成...".format(page) + "\n")
+    if page == start_url:
+   	print("第{}页下载完成...".format(page) + "\n")
+	print("开始下载第{}页...".format(page+1))
+    else:
+	print("第{}页下载完成...".format(page) + "\n")
+	print("任务完成，Thank you !!!")
+
 def writeFile(pic):
     """
     把所有的图片保存到本地
@@ -55,7 +61,7 @@ def writeFile(pic):
     filename = '{}/{}.{}'.format(os.getcwd(),md5(content).hexdigest(),'jpeg')
     with open(filename,'wb') as f:
         f.write(content)
-    pass
+
 if __name__ == '__main__':
     start_url = int(input("请输入需要下载的开始页："))
     end_url = int(input("请输入需要下载的结束页："))
